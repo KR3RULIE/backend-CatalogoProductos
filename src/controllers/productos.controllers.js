@@ -34,11 +34,11 @@ export const crearProducto = async (req, res) => {
 // agregar funcion para leer Productos por ID
 export const leerProductoID = async (req, res) => {
   try {
-    const productoBuscado = await Producto.findById(req.params.id);
-    if (!productoBuscado) {
+    const productoModificado = await Producto.findById(req.params.id, req.body);
+    if (!productoModificado) {
       return res.status(404).json({ mensaje: "Producto no encontrado" });
     }
-    res.status(200).json(productoBuscado);
+    res.status(200).json(productoModificado);
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: "Error al obtener el producto" });
@@ -51,7 +51,7 @@ export const borrarProductoID = async (req, res) => {
     if (!productoEliminado) {
       return res
         .status(404)
-        .json({ mensaje: "El producto no se pudo econtrar" });
+        .json({ mensaje: "El producto no se pudo encontrar" });
     }
     res.status(200).json({ mennsaje: "Producto eliminado exitosamente" });
   } catch (error) {
@@ -60,3 +60,17 @@ export const borrarProductoID = async (req, res) => {
   }
 };
 // agregar funcion para editar Producto
+export const editarProductoID = async (req, res) => {
+  try {
+    const productoEliminado = await Producto.findByIdAndUpdate(req.params.id);
+    if (!productoEliminado) {
+      return res
+        .status(404)
+        .json({ mensaje: "El producto no se pudo encontrar" });
+    }
+    res.status(200).json({ mennsaje: "Producto actualizado exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al actualizar el producto" });
+  }
+};
