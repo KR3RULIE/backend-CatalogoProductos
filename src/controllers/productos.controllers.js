@@ -6,6 +6,7 @@ export const test = (req, res) => {
   res.send("Primera prueba desde el backend");
 };
 
+// agregar funcion para leer Productos
 export const leerProductos = async (req, res) => {
   try {
     const listaProductos = await Producto.find();
@@ -28,6 +29,19 @@ export const crearProducto = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: "Error al crear el producto" });
+  }
+};
+// agregar funcion para leer Productos por ID
+export const leerProductoID = async (req, res) => {
+  try {
+    const productoBuscado = await Producto.findById(req.params.id);
+    if (!productoBuscado) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+    res.status(200).json(productoBuscado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al obtener el producto" });
   }
 };
 
